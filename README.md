@@ -2,7 +2,7 @@
 
 To support the specification of Shlaer-Mellor Executable UML models we need a way to define types (data types) that can be supported by a wide variety of platforms.
 
-The [Shlaer-Mellor metamodel]()  supports the use of types and operations on types in its action semantics, but it makes no attempt to define them.
+The [Shlaer-Mellor metamodel](https://github.com/modelint/shlaer-mellor-metamodel)  supports the use of types and operations on types in its action semantics, but it makes no attempt to define them.
 
 This establishes a domain separation from Shlaer-Mellor semantics and type definition.
 
