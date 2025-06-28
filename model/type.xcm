@@ -1,0 +1,120 @@
+metadata
+    Title : Type Subsystem / Types
+    Author : Leon Starr
+    Document ID : mint.type.td.1
+    Version : 0.1.0
+    /// Creation date : June 26, 2025
+    Modification date : June 26, 2025
+    Organization : Model Integration, LLC / www.modelint.com
+    Copyright notice > MIT
+    Organization logo > mint
+domain Types, T
+subsystem Type, TYPE 1-99
+class Parameter
+attributes
+    Name : Parameter Name {I}
+    Operator : Operator Name {I, R5}
+    Type : Type Name {I, R5}
+    Parameter type : Type Name {R8c}
+--
+class Platform
+attributes
+    Name : Platform Name {I}
+--
+class Implementation
+attributes
+    Platform : Platform Name {I, R10}
+    Base type : Type Name {I, R10}
+    Physical type : Physical Type Name
+--
+class Component
+attributes
+    Name : Component Name {I}
+    Container : Type Name {I, R6}
+    Type : Type Name {I, R7c}
+    Constraint : Constraint
+--
+class Type
+attributes
+    Name : Type Name {I}
+--
+class Base Type
+attributes
+    Name : Type Name {I, R1}
+    Numeric : Boolean
+--
+class User Type
+attributes
+    Name : Type Name {I, R1}
+    Category : General_Domain
+--
+class Inheritance
+attributes
+    User type : Type Name {I, R2}
+    Base type : Type Name {R2}
+--
+class Operator
+attributes
+    Name : Operator Name {I}
+    Type : Type Name {I, R3}
+    Subject : Type_Value
+--
+class Operator Exclusion
+attributes
+    Operator : Operator Name {I, R4}
+    Base type : Type Name {I, R4c}
+    New type : Type Name {I, R4}
+--
+relationships
+    R1
+    Type +
+        User Type
+        Base Type
+    <subclass>.Name -> Type.Name
+--
+    R2
+    inherits from, 1 Type
+    is base type for, Mc User Type
+    1 Inheritance
+    Inheritance.Base type -> Type.Name
+    Inheritance.User type -> User Type.Name
+--
+    R3
+    supports, Mc Operator
+    is supported by, 1 Type
+    Operator.Type -> Type.Name
+--
+    R4
+    excludes, Mc Operator
+    is excluded by, Mc Inheritance
+    1 Operator Exclusion
+    Operator Exclusion.(Operator, Type) -> Operator.(Name, Type)
+    Operator Exclusion.New type -> Inheritance.User type
+--
+    R5
+    takes, Mc Parameter
+    is supplied to, 1 Operator
+    Parameter.(Operator, Type) -> Operator.(Name, Type)
+--
+    R6
+    defines, M Component
+    is defined in, 1 User Type
+    Component.Container -> User Type.Name
+--
+    R7
+    holds values of, 1 Type
+    specifies values in, 1 User Type
+    Component.Type -> Type.Name
+--
+    R8
+    values is of, 1 Type
+    specifies values in, Mc Parameter
+    Parameter.Parameter type -> Type.Name
+--
+    R10
+    is implemented on, Mc Platform
+    implements, Mc Base Type
+    1 Implementation
+    Implementation.Base type -> Base Type.Name
+    Implementation.Platform -> Platform.Name
+--
