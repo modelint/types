@@ -10,6 +10,59 @@ metadata
     Organization logo > mint
 domain Types, T
 subsystem Type, TYPE 1-99
+class Symbol
+attributes
+    Name : Symbol Name {I}
+    Component : Component Name {I, R13}
+    User type : Type Name {I, R13}
+--
+class Type Generator Expression
+attributes
+    Component : Component Name {I, R11}
+    User Type : Type Name {I, R11}
+--
+class Symbol Set
+attributes
+    Component : Component Name {I, R12}
+    User type : Type Name {I, R12}
+--
+class Rule
+attributes
+    Component : Component Name {I, R12}
+    User type : Type Name {I, R12}
+    Rule : Rule Text
+--
+class String Constraint
+attributes
+    Component : Component Name {I, R12}
+    User type : Type Name {I, R12}
+    Regex : Regex String
+--
+class Integer Range
+attributes
+    Component : Component Name {I, R12}
+    User type : Type Name {I, R12}
+    From : Integer
+    To : Integer
+--
+class Rational Range
+attributes
+    Component : Component Name {I, R12}
+    User type : Type Name {I, R12}
+    From : Rational
+    To : Rational
+--
+class Component
+attributes
+    Name : Component Name {I}
+    User Type : Type Name {I, R6}
+--
+class Component Type
+attributes
+    Component : Component Name {I, R7}
+    User Type : Type Name {I, R7}
+    Constrained type : Type Name {R7}
+--
 class Parameter
 attributes
     Name : Parameter Name {I}
@@ -27,13 +80,6 @@ attributes
     Base type : Type Name {I, R10}
     Physical type : Physical Type Name
 --
-class Component
-attributes
-    Name : Component Name {I}
-    Container : Type Name {I, R6}
-    Type : Type Name {I, R7c}
-    Constraint : Constraint
---
 class Type
 attributes
     Name : Type Name {I}
@@ -41,7 +87,6 @@ attributes
 class Base Type
 attributes
     Name : Type Name {I, R1}
-    Numeric : Boolean
 --
 class User Type
 attributes
@@ -97,14 +142,16 @@ relationships
     Parameter.(Operator, Type) -> Operator.(Name, Type)
 --
     R6
-    defines, M Component
-    is defined in, 1 User Type
+    internal structure is broken down into, M Component
+    structures, 1 User Type
     Component.Container -> User Type.Name
 --
     R7
-    holds values of, 1 Type
-    specifies values in, 1 User Type
-    Component.Type -> Type.Name
+    holds a subset of values defined by, 1 Type
+    defines superset of values assignable to, Mc Component
+    1 Component Type
+    Component Type.(Component, User Type) -> Component.(Name, User Type)
+    Component Type.Constrained Type -> Type.Name
 --
     R8
     values is of, 1 Type
@@ -117,4 +164,23 @@ relationships
     1 Implementation
     Implementation.Base type -> Base Type.Name
     Implementation.Platform -> Platform.Name
+--
+    R11
+    is modified by, 1c Type Generator Expression
+    modifies, 1 Component Type
+    Type Generator Expression.(Component, User type) -> Component Type.(Name, User type)
+--
+    R12
+    Type Generator Expression +
+        Rule
+        String Expression
+        Integer Range
+        Rational Range
+        Symbol Set
+    <subclass>.(Component, User type) -> Type Generator Express.(Component, User type)
+--
+    R13
+    is a member of, 1 Symbol Set
+    has member, M Symbol
+    Symbol.(Component, User type) -> Symbol Set.(Component, User type)
 --
