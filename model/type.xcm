@@ -4,12 +4,21 @@ metadata
     Document ID : mint.type.td.1
     Version : 0.1.0
     /// Creation date : June 26, 2025
-    Modification date : June 26, 2025
+    Modification date : June 29, 2025
     Organization : Model Integration, LLC / www.modelint.com
     Copyright notice > MIT
     Organization logo > mint
 domain Types, T
 subsystem Type, TYPE 1-99
+class Base Type
+attributes
+    Name : Type Name {I, R1}
+--
+class Component
+attributes
+    Name : Component Name {I}
+    User Type : Type Name {I, R6}
+--
 class Constraint
 attributes
     Component : Component Name {I, R11}
@@ -20,6 +29,17 @@ attributes
     Component : Component Name {I, R12}
     User type : Type Name {I, R12}
     General Rule : General Rule Text
+--
+class Implementation
+attributes
+    Platform : Platform Name {I, R10}
+    Base type : Type Name {I, R10}
+    Physical type : Physical Type Name
+--
+class Inheritance
+attributes
+    User type : Type Name {I, R2}
+    Base type : Type Name {R2}
 --
 class Integer Range
 attributes
@@ -34,6 +54,34 @@ attributes
     User type : Type Name {I, R12}
     False name : Name
     True name : Name
+--
+class Operator
+attributes
+    Name : Operator Name {I}
+    Type : Type Name {I, R3}
+    Subject : Type_Value
+--
+class Operator Exclusion
+attributes
+    Operator : Operator Name {I, R4}
+    Base type : Type Name {I, R4c}
+    New type : Type Name {I, R4}
+--
+class Parameter
+attributes
+    Name : Parameter Name {I}
+    Operator : Operator Name {I, R5}
+    Type : Type Name {I, R5}
+    Parameter type : Type Name {R8c}
+--
+class Platform
+attributes
+    Name : Platform Name {I}
+--
+class Property
+attributes
+    Name : Property Name {I}
+    Type : Type Name {I, R9}
 --
 class Rational Range
 attributes
@@ -59,63 +107,20 @@ attributes
     Component : Component Name {I, R12}
     User type : Type Name {I, R12}
 --
-class Component
-attributes
-    Name : Component Name {I}
-    User Type : Type Name {I, R6}
---
-class Value Subset
-attributes
-    Component : Component Name {I, R7}
-    User Type : Type Name {I, R7}
-    Constrained type : Type Name {R7}
---
-class Parameter
-attributes
-    Name : Parameter Name {I}
-    Operator : Operator Name {I, R5}
-    Type : Type Name {I, R5}
-    Parameter type : Type Name {R8c}
---
-class Platform
-attributes
-    Name : Platform Name {I}
---
-class Implementation
-attributes
-    Platform : Platform Name {I, R10}
-    Base type : Type Name {I, R10}
-    Physical type : Physical Type Name
---
 class Type
 attributes
     Name : Type Name {I}
---
-class Base Type
-attributes
-    Name : Type Name {I, R1}
 --
 class User Type
 attributes
     Name : Type Name {I, R1}
     Category : General_Domain
 --
-class Inheritance
+class Value Subset
 attributes
-    User type : Type Name {I, R2}
-    Base type : Type Name {R2}
---
-class Operator
-attributes
-    Name : Operator Name {I}
-    Type : Type Name {I, R3}
-    Subject : Type_Value
---
-class Operator Exclusion
-attributes
-    Operator : Operator Name {I, R4}
-    Base type : Type Name {I, R4c}
-    New type : Type Name {I, R4}
+    Component : Component Name {I, R7}
+    User Type : Type Name {I, R7}
+    Constrained type : Type Name {R7}
 --
 relationships
     R1
@@ -165,9 +170,14 @@ relationships
     specifies values in, Mc Parameter
     Parameter.Parameter type -> Type.Name
 --
+    R9
+    defines data to support operations on, 1 User Type
+    uses data in, Mc Property
+    Property.Type -> User Type.Name
+--
     R10
-    is implemented on, Mc Platform
-    implements, Mc Base Type
+    is implemented on, M Platform
+    implements, M Base Type
     1 Implementation
     Implementation.Base type -> Base Type.Name
     Implementation.Platform -> Platform.Name

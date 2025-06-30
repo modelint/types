@@ -8,6 +8,7 @@ padding l200 b350
 frame Model Integration Diagram
 frame_presentation default
 nodes
+    Property 8,10
     Constraint/3 3,5
     Regular Expression 1-2,2
     Integer Range 1-2,3
@@ -29,14 +30,15 @@ nodes
     Symbol 1-2,9
 connectors
     +R1 : b|Type { t|Base Type, t|User Type }
-    -R2.2 : -/1 r|User Type : +/1 r|Type, l|Inheritance : L8
+    -R2.2 : -/1 r+2|User Type : +/1 r|Type, l|Inheritance : L8
     -R3 : +/1 t|Type : +/1 b*|Operator
     +R4 : -/1 r|Operator : +/1 t|Inheritance, l|Operator Exclusion
     +R5 : -/1 r|Parameter : +/1 l*|Operator
     +R6 : -/1 b|User Type : +/2 t*|Component
     -R7.2-1 : -/2 l|Component : -/2 l-1|Type, t|Value Subset : L5R-2
     -R8.2 : -/1 b|Parameter : +/1 l+1|Type
-    +R10 : -/1 r|Platform : +/1 l*|Base Type, t|Implementation
+    +R9 : -/2 r*|User Type : -/1 l-1|Property
+    +R10 : -/1 r|Platform : -/1 l*|Base Type, t|Implementation
     -R11 : +/1 b|Value Subset : +/1 t*|Constraint
     +R12 : b|Constraint { t|Regular Expression, t|Integer Range, t|Rational Range, t|Name Pair, t|General Rule, t|Symbol Set }
     +R13 : -/1 r|Symbol Set : +/1 l*|Symbol
