@@ -10,33 +10,16 @@ metadata
     Organization logo > mint
 domain Types, T
 subsystem Type, TYPE 1-99
-class Symbol
-attributes
-    Name : Symbol Name {I}
-    Component : Component Name {I, R13}
-    User type : Type Name {I, R13}
---
-class Type Generator Expression
+class Constraint
 attributes
     Component : Component Name {I, R11}
     User Type : Type Name {I, R11}
 --
-class Symbol Set
+class General Rule
 attributes
     Component : Component Name {I, R12}
     User type : Type Name {I, R12}
---
-class Rule
-attributes
-    Component : Component Name {I, R12}
-    User type : Type Name {I, R12}
-    Rule : Rule Text
---
-class String Constraint
-attributes
-    Component : Component Name {I, R12}
-    User type : Type Name {I, R12}
-    Regex : Regex String
+    General Rule : General Rule Text
 --
 class Integer Range
 attributes
@@ -45,6 +28,13 @@ attributes
     From : Integer
     To : Integer
 --
+class Name Pair
+attributes
+    Component : Component Name {I, R12}
+    User type : Type Name {I, R12}
+    False name : Name
+    True name : Name
+--
 class Rational Range
 attributes
     Component : Component Name {I, R12}
@@ -52,12 +42,29 @@ attributes
     From : Rational
     To : Rational
 --
+class Regular Expression
+attributes
+    Component : Component Name {I, R12}
+    User type : Type Name {I, R12}
+    Regex : Regex String
+--
+class Symbol
+attributes
+    Name : Symbol Name {I}
+    Component : Component Name {I, R13}
+    User type : Type Name {I, R13}
+--
+class Symbol Set
+attributes
+    Component : Component Name {I, R12}
+    User type : Type Name {I, R12}
+--
 class Component
 attributes
     Name : Component Name {I}
     User Type : Type Name {I, R6}
 --
-class Component Type
+class Value Subset
 attributes
     Component : Component Name {I, R7}
     User Type : Type Name {I, R7}
@@ -149,9 +156,9 @@ relationships
     R7
     holds a subset of values defined by, 1 Type
     defines superset of values assignable to, Mc Component
-    1 Component Type
-    Component Type.(Component, User Type) -> Component.(Name, User Type)
-    Component Type.Constrained Type -> Type.Name
+    1 Value Subset
+    Value Subset.(Component, User Type) -> Component.(Name, User Type)
+    Value Subset.Constrained Type -> Type.Name
 --
     R8
     values is of, 1 Type
@@ -166,16 +173,17 @@ relationships
     Implementation.Platform -> Platform.Name
 --
     R11
-    is modified by, 1c Type Generator Expression
-    modifies, 1 Component Type
-    Type Generator Expression.(Component, User type) -> Component Type.(Name, User type)
+    is defined by, 1c Constraint
+    defines, 1 Value Subset
+    Constraint.(Component, User type) -> Value Subset.(Name, User type)
 --
     R12
-    Type Generator Expression +
-        Rule
+    Constraint +
+        General Rule
         String Expression
         Integer Range
         Rational Range
+        Name Pair
         Symbol Set
     <subclass>.(Component, User type) -> Type Generator Express.(Component, User type)
 --
