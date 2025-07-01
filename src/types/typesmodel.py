@@ -1,5 +1,5 @@
 """
-typesmodel.py – Parses the Types Model and creates a corresponding database schema
+typesmodel.py – Parses the MakeTypesDB Model and creates a corresponding database schema
 """
 
 # System
@@ -31,7 +31,7 @@ def snake(sdelim: str) -> str:
 
 class TypesModel:
     """
-    The Types Model is loaded from a package representing a Modeled Domain.
+    The MakeTypesDB Model is loaded from a package representing a Modeled Domain.
 
     The package is a folder consisting of one or more subsystem .xcm files and a single
     types_domain yaml file.
@@ -43,7 +43,7 @@ class TypesModel:
     """
     _logger = logging.getLogger(__name__)
 
-    # Types home
+    # MakeTypesDB home
     types_home = Path(__file__).parent / "types_domain"
     tclral_types = types_home / "tclral_types.yaml"
 
@@ -57,7 +57,7 @@ class TypesModel:
     types = None  # These are defined for all subsystems in the domain_name (not loaded yet)
     types_ntuples = [
         '"""',
-        f'{_types_nt_fname} - Generated named tuples corresponding to each Types class',
+        f'{_types_nt_fname} - Generated named tuples corresponding to each MakeTypesDB class',
         '"""',
         '\n',
         'from collections import namedtuple',
@@ -154,7 +154,6 @@ class TypesModel:
         Add class to database as a relvar definition
 
         :param mm_class:
-        :return:
         """
         cname = snake(mm_class['name'])
         try:
@@ -182,7 +181,7 @@ class TypesModel:
         """
         Based on the rel type, call the appropriate method
 
-        :param mm_class:
+        :param rel:
         :return:
         """
         # The following cases are mutually exclusive since an SM relationship
