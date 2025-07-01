@@ -55,7 +55,7 @@ class TypesModel:
     subsys_cm_files = list(types_pkg.glob('*.xcm'))
 
     types = None  # These are defined for all subsystems in the domain_name (not loaded yet)
-    types_ntuples = [
+    mmclass_ntuples = [
         '"""',
         f'{_types_nt_fname} - Generated named tuples corresponding to each MakeTypesDB class',
         '"""',
@@ -112,11 +112,11 @@ class TypesModel:
                     cls.add_class(c)
                     attr_string = ' '.join([f"{snake(a['name'])}" for a in c['attributes']])
                     cname_string = f"{snake(c['name'])}_i"
-                    cls.types_ntuples.append(f"{cname_string} = namedtuple('{cname_string}', '{attr_string}')")
+                    cls.mmclass_ntuples.append(f"{cname_string} = namedtuple('{cname_string}', '{attr_string}')")
 
         # Create the metamodel class named tuples .py file
         pp_file = Path.cwd() / _types_nt_fname
-        pp_file.write_text('\n'.join(cls.types_ntuples))
+        pp_file.write_text('\n'.join(cls.mmclass_ntuples))
 
         # Now that all classes are present in the tclral, add all the constraints
         for sname, subsys in cls.types_subsystem.items():
@@ -143,7 +143,7 @@ class TypesModel:
         cls.types_subsystem[sname] = ClassModelParser.parse_file(file_input=cm_path, debug=False)
 
         # Get the datatypes
-        type_text = cls.types.read_text()
+        type_text = cls.tclral_types.read_text()
         cls.types = yaml.safe_load(type_text)
 
         return cls.types_subsystem[sname]

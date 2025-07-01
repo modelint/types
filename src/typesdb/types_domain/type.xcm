@@ -66,7 +66,6 @@ class Operator
 attributes
     Name : Operator Name {I}
     Type : Type Name {I, R3}
-    Subject : Type_Value
 --
 class Operator Exclusion
 attributes
@@ -147,19 +146,19 @@ relationships
     inherits from, 1 Type
     is base type for, Mc User Type
     1 Inheritance
-    Inheritance.Base type -> Type.Name
+    Inheritance.Inherited type -> Type.Name
     Inheritance.User type -> User Type.Name
 --
     R3
     defines, Mc Operator
-    is defiend on, 1 Type
+    is defined on, 1 Type
     Operator.Type -> Type.Name
 --
     R4
     excludes, Mc Operator
     is excluded by, Mc Inheritance
     1 Operator Exclusion
-    Operator Exclusion.(Operator, Type) -> Operator.(Name, Type)
+    Operator Exclusion.(Operator, Inherited type) -> Operator.(Name, Type)
     Operator Exclusion.New type -> Inheritance.User type
 --
     R5
@@ -170,14 +169,14 @@ relationships
     R6
     internal structure is broken down into, M Component
     structures, 1 User Type
-    Component.Container -> User Type.Name
+    Component.User type -> User Type.Name
 --
     R7
     holds a subset of values defined by, 1 Type
     defines superset of values assignable to, Mc Component
     1 Value Subset
-    Value Subset.(Component, User Type) -> Component.(Name, User Type)
-    Value Subset.Constrained Type -> Type.Name
+    Value Subset.(Component, User type) -> Component.(Name, User type)
+    Value Subset.Constrained type -> Type.Name
 --
     R8
     values is of, 1 Type
@@ -199,15 +198,15 @@ relationships
     R11
     is defined by, 1c Constraint
     defines, 1 Value Subset
-    Constraint.(Component, User type) -> Value Subset.(Name, User type)
+    Constraint.(Component, User type) -> Value Subset.(Component, User type)
 --
     R12
     Constraint +
-        General Rule
-        String Expression
+        Regular Expression
         Integer Range
         Rational Range
         Boolean Symbol Pair
+        General Rule
         Symbol Set
     <subclass>.(Component, User type) -> Type Generator Express.(Component, User type)
 --
