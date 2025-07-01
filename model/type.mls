@@ -4,41 +4,47 @@ presentation default
 orientation landscape
 color teal
 sheet A1
-padding l200 b350
+padding l200 b250
 frame Model Integration Diagram
 frame_presentation default
 nodes
-    Property 8,10
-    Constraint/3 3,5
-    Regular Expression 1-2,2
-    Integer Range 1-2,3
-    Rational Range 1-2,4
-    Name Pair 1-2,5
-    General Rule 1-2,6
-    Symbol Set 1-2,7
-    Component 6,7
-    Value Subset 5,5
-    Type 10,6
-    Base Type 8,4
-    User Type 8,7
-    Inheritance 9,9
-    Operator 12,6
-    Parameter 12,3
-    Operator Exclusion/2 11,10
-    Platform 8,2
-    Implementation 6-7,3
-    Symbol 1-2,9
+    Property 10,10
+    Constraint/3 5,5
+    Regular Expression 3-4,2
+    Integer Range 3-4,3
+    Integer Subrange 1,3
+    Rational Range 3-4,4
+    Rational Subrange 1,4
+    Boolean Symbol Pair/2 3-4,5
+    General Rule 3-4,6
+    Symbol Set 3-4,7
+    Component 8,7
+    Value Subset 7,5
+    Type 12,6
+    Base Type 10,4
+    User Type 10,7
+    Inheritance 11,9
+    Operator 14,6
+    Operand 14,3
+    Operator Exclusion/2 13,10
+    Platform 10,2
+    Implementation 8-9,3
+    Symbol 3-4,9
 connectors
     +R1 : b|Type { t|Base Type, t|User Type }
     -R2.2 : -/1 r+2|User Type : +/1 r|Type, l|Inheritance : L8
     -R3 : +/1 t|Type : +/1 b*|Operator
     +R4 : -/1 r|Operator : +/1 t|Inheritance, l|Operator Exclusion
-    +R5 : -/1 r|Parameter : +/1 l*|Operator
+    +R5 : -/1 r|Operand : +/1 l*|Operator
     +R6 : -/1 b|User Type : +/2 t*|Component
     -R7.2-1 : -/2 l|Component : -/2 l-1|Type, t|Value Subset : L5R-2
-    -R8.2 : -/1 b|Parameter : +/1 l+1|Type
+    -R8.2 : -/1 b|Operand : +/1 l+1|Type
     +R9 : -/2 r*|User Type : -/1 l-1|Property
     +R10 : -/1 r|Platform : -/1 l*|Base Type, t|Implementation
     -R11 : +/1 b|Value Subset : +/1 t*|Constraint
-    +R12 : b|Constraint { t|Regular Expression, t|Integer Range, t|Rational Range, t|Name Pair, t|General Rule, t|Symbol Set }
+    +R12 : b|Constraint { t|Regular Expression, t|Integer Range, t|Rational Range, t|Boolean Symbol Pair, t|General Rule, t|Symbol Set }
     +R13 : -/1 r|Symbol Set : +/1 l*|Symbol
+    -OR14.2-1 : -/1 l+2|Operand : +/1 t-2|Operand : L2R+2 L15R-2
+    +R15 : -/1 b|Integer Range : +/1 t*|Integer Subrange
+    +R16 : -/1 b|Rational Range : +/1 t*|Rational Subrange
+

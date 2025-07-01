@@ -14,15 +14,22 @@ class Base Type
 attributes
     Name : Type Name {I, R1}
 --
+class Boolean Symbol Pair
+attributes
+    Component : Component Name {I, R12}
+    User type : Type Name {I, R12}
+    False symbol : Symbol Name
+    True symbol : Symbol Name
+--
 class Component
 attributes
     Name : Component Name {I}
-    User Type : Type Name {I, R6}
+    User type : Type Name {I, R6}
 --
 class Constraint
 attributes
     Component : Component Name {I, R11}
-    User Type : Type Name {I, R11}
+    User type : Type Name {I, R11}
 --
 class General Rule
 attributes
@@ -39,21 +46,21 @@ attributes
 class Inheritance
 attributes
     User type : Type Name {I, R2}
-    Base type : Type Name {R2}
+    Inherited type : Type Name {R2}
 --
 class Integer Range
 attributes
     Component : Component Name {I, R12}
     User type : Type Name {I, R12}
-    From : Integer
-    To : Integer
 --
-class Name Pair
+class Integer Subrange
 attributes
-    Component : Component Name {I, R12}
-    User type : Type Name {I, R12}
-    False name : Name
-    True name : Name
+    Component : Component Name {I, R15}
+    User type : Type Name {I, R15}
+    Min : Integer {I}
+    Min inclusive : Boolean
+    Max : Integer
+    Max inclusive : Boolean
 --
 class Operator
 attributes
@@ -64,15 +71,15 @@ attributes
 class Operator Exclusion
 attributes
     Operator : Operator Name {I, R4}
-    Base type : Type Name {I, R4c}
+    Inherited type : Type Name {I, R4c}
     New type : Type Name {I, R4}
 --
-class Parameter
+class Operand
 attributes
-    Name : Parameter Name {I}
+    Position : Operand Position {I}
     Operator : Operator Name {I, R5}
     Type : Type Name {I, R5}
-    Parameter type : Type Name {R8c}
+    Operand type : Type Name {R8c}
 --
 class Platform
 attributes
@@ -87,14 +94,21 @@ class Rational Range
 attributes
     Component : Component Name {I, R12}
     User type : Type Name {I, R12}
-    From : Rational
-    To : Rational
+--
+class Rational Subrange
+attributes
+    Component : Component Name {I, R16}
+    User type : Type Name {I, R16}
+    Min : Rational {I}
+    Min inclusive : Boolean
+    Max : Rational
+    Max inclusive : Boolean
 --
 class Regular Expression
 attributes
     Component : Component Name {I, R12}
     User type : Type Name {I, R12}
-    Regex : Regex String
+    Regex : Regular Expression
 --
 class Symbol
 attributes
@@ -119,7 +133,7 @@ attributes
 class Value Subset
 attributes
     Component : Component Name {I, R7}
-    User Type : Type Name {I, R7}
+    User type : Type Name {I, R7}
     Constrained type : Type Name {R7}
 --
 relationships
@@ -137,8 +151,8 @@ relationships
     Inheritance.User type -> User Type.Name
 --
     R3
-    supports, Mc Operator
-    is supported by, 1 Type
+    defines, Mc Operator
+    is defiend on, 1 Type
     Operator.Type -> Type.Name
 --
     R4
@@ -149,9 +163,9 @@ relationships
     Operator Exclusion.New type -> Inheritance.User type
 --
     R5
-    takes, Mc Parameter
-    is supplied to, 1 Operator
-    Parameter.(Operator, Type) -> Operator.(Name, Type)
+    operates on, Mc Operand
+    is operated on by, 1 Operator
+    Operand.(Operator, Type) -> Operator.(Name, Type)
 --
     R6
     internal structure is broken down into, M Component
@@ -167,8 +181,8 @@ relationships
 --
     R8
     values is of, 1 Type
-    specifies values in, Mc Parameter
-    Parameter.Parameter type -> Type.Name
+    specifies values in, Mc Operand
+    Operand.Operand type -> Type.Name
 --
     R9
     defines data to support operations on, 1 User Type
@@ -193,7 +207,7 @@ relationships
         String Expression
         Integer Range
         Rational Range
-        Name Pair
+        Boolean Symbol Pair
         Symbol Set
     <subclass>.(Component, User type) -> Type Generator Express.(Component, User type)
 --
@@ -201,4 +215,18 @@ relationships
     is a member of, 1 Symbol Set
     has member, M Symbol
     Symbol.(Component, User type) -> Symbol Set.(Component, User type)
+--
+    OR14
+    before / after, Operand
+    Position : I
+--
+    R15
+    is included in, 1 Integer Range
+    includes, M Integer Subrange
+    Integer Subrange.(Component, User type) -> Integer Range.(Component, User type)
+--
+    R16
+    is included in, 1 Rational Range
+    includes, M Rational Subrange
+    Rational Subrange.(Component, User type) -> Rational Range.(Component, User type)
 --
