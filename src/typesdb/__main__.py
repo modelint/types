@@ -12,8 +12,8 @@ import argparse
 from pathlib import Path
 
 # MakeTypesDB
-from types.typesmodel import TypesModel
-from types import version
+from typesdb.typesmodel import TypesModel
+from typesdb import version
 
 _logpath = Path("make_typesdb.log")
 _progname = 'Make Types database'

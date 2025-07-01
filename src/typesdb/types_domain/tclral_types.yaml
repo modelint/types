@@ -1,0 +1,15 @@
+---
+Boolean : boolean
+Component Name : string
+General_Domain : string
+General Rule Text : string
+Integer : int
+Operater Name : string
+Operator Position : int
+Physical Type Name : string
+Platform Name : string
+Property Name : string
+Rational : double
+Regular Expression : string
+Symbol Name : string
+Type Name : string
