@@ -12,9 +12,9 @@ nodes
     Constraint/3 5,5
     Regular Expression 3-4,2
     Integer Range 3-4,3
-    Integer Subrange 1,3
+    Integer Extent 1-2,3
     Rational Range 3-4,4
-    Rational Subrange 1,4
+    Rational Extent 1-2,4
     Boolean Symbol Pair/2 3-4,5
     General Rule 3-4,6
     Symbol Set 3-4,7
@@ -45,6 +45,8 @@ connectors
     +R12 : b|Constraint { t|Regular Expression, t|Integer Range, t|Rational Range, t|Boolean Symbol Pair, t|General Rule, t|Symbol Set }
     +R13 : -/1 r|Symbol Set : +/1 l*|Symbol
     -OR14.2-1 : -/1 l+2|Operand : +/1 t-2|Operand : L2R+2 L15R-2
-    +R15 : -/1 b|Integer Range : +/1 t*|Integer Subrange
-    +R16 : -/1 b|Rational Range : +/1 t*|Rational Subrange
+    +R15 : -/1 b|Integer Range : +/1 t*|Integer Extent
+    +R16 : -/1 b|Rational Range : +/1 t*|Rational Extent
+    -OR17.2-1 : +/1 l+2|Integer Extent : -/1 l-2|Integer Extent : L3R-3
+    +OR18.2-1 : +/1 r+2|Rational Extent : -/1 r-2|Rational Extent : L5R-2
 

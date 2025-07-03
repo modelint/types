@@ -2,9 +2,9 @@ metadata
     Title : Type Subsystem / Types
     Author : Leon Starr
     Document ID : mint.type.td.1
-    Version : 0.1.0
+    Version : 0.1.1
     /// Creation date : June 26, 2025
-    Modification date : June 29, 2025
+    Modification date : July 3, 2025
     Organization : Model Integration, LLC / www.modelint.com
     Copyright notice > MIT
     Organization logo > mint
@@ -48,19 +48,18 @@ attributes
     User type : Type Name {I, R2}
     Inherited type : Type Name {R2}
 --
+class Integer Extent
+attributes
+    Component : Component Name {I, R15}
+    User type : Type Name {I, R15}
+    Value : Integer {I, OR17}
+    Direction : Min_Max
+    Exclusive : Boolean
+--
 class Integer Range
 attributes
     Component : Component Name {I, R12}
     User type : Type Name {I, R12}
---
-class Integer Subrange
-attributes
-    Component : Component Name {I, R15}
-    User type : Type Name {I, R15}
-    Min : Integer {I}
-    Min inclusive : Boolean
-    Max : Integer
-    Max inclusive : Boolean
 --
 class Operator
 attributes
@@ -89,19 +88,18 @@ attributes
     Name : Property Name {I}
     Type : Type Name {I, R9}
 --
+class Rational Extent
+attributes
+    Component : Component Name {I, R15}
+    User type : Type Name {I, R15}
+    Value : Rational {I, OR18}
+    Direction : Min_Max
+    Exclusive : Boolean
+--
 class Rational Range
 attributes
     Component : Component Name {I, R12}
     User type : Type Name {I, R12}
---
-class Rational Subrange
-attributes
-    Component : Component Name {I, R16}
-    User type : Type Name {I, R16}
-    Min : Rational {I}
-    Min inclusive : Boolean
-    Max : Rational
-    Max inclusive : Boolean
 --
 class Regular Expression
 attributes
@@ -221,11 +219,19 @@ relationships
 --
     R15
     is included in, 1 Integer Range
-    includes, M Integer Subrange
-    Integer Subrange.(Component, User type) -> Integer Range.(Component, User type)
+    includes, M Integer Extent
+    Integer Extent.(Component, User type) -> Integer Range.(Component, User type)
 --
     R16
     is included in, 1 Rational Range
-    includes, M Rational Subrange
-    Rational Subrange.(Component, User type) -> Rational Range.(Component, User type)
+    includes, M Rational Extent
+    Rational Extent.(Component, User type) -> Rational Range.(Component, User type)
+--
+    OR17
+    less than / greater than, Integer Extent
+    Value : I
+--
+    OR18
+    less than / greater than, Rational Extent
+    Value : I
 --

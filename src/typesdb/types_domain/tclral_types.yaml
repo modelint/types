@@ -4,6 +4,7 @@ Component Name : string
 General_Domain : string
 General Rule Text : string
 Integer : int
+Min_Max : string
 Operator Name : string
 Operand Position : int
 Physical Type Name : string
